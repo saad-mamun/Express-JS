@@ -11,20 +11,16 @@ const port = process.env.PORT;
 // role-2 setup static folder....
 // app.use(express.static(path.join(__dirname, "public")))
 
-// role -1 file routing....
-app.get("/", (req, res) => {
-  // file director
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-  // res.send('<h1>Hello world</h1>')
-  //   res.send({ message: "Hello, World!" });
-});
-app.get("/about", (req, res) => {
-  // file director
-  res.sendFile(path.join(__dirname, "public", "about.html"));
-});
+
+// Body parser middleware
+// atake app.use("/api/posts", router) file er upore likhte hobe
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 
 //Route..
 app.use("/api/posts", router);
+
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

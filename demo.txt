@@ -13,7 +13,13 @@ role: 1 - file routing....
 app.get("/", (req, res) => {
     file director
   res.sendFile(path.join(__dirname, "public", "index.html"));
-  res.send('<h1>Hello world</h1>')   res.send({ message: "Hello, World!" }); }); app.get("/about", (req, res) => {     file director    res.sendFile(path.join(__dirname, "public", "about.html"));
+  res.send('<h1>Hello world</h1>')  
+  res.send({ message: "Hello, World!" });
+ });
+  
+  
+  
+app.get("/about", (req, res) => {     file director    res.sendFile(path.join(__dirname, "public", "about.html"));
 });
 
 
@@ -53,4 +59,62 @@ const limit = parseInt(req.query.limit);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+});
+
+
+
+day 2.......
+
+
+server.js er modhe..
+// Body parser middleware
+// atake app.use("/api/posts", router) file er upore likhte hobe
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+
+//Route..
+app.use("/api/posts", router);
+
+route/posts.js er modhe
+
+// Create new post
+router.post("/", (req, res) => {
+  const newPost = {
+    id: posts.length + 1,
+    title: req.body.title,
+  };
+
+  if (!newPost.title) {
+    return res.status(400).json({ msg: "Please include a title" });
+  }
+  posts.push(newPost);
+  res.status(201).json(posts);
+});
+
+// Update post..
+router.put('/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const post = posts.find((post)=> post.id === id);
+
+  if(!post){
+    return res
+      .status(404)
+      .json({ msg: `A post with the id od ${id} was not found ` });
+  }
+  post.title = req.body.title;
+  res.status(200).json(posts)
+})
+
+// Delete post.
+router.delete("/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const post = posts.find((post) => post.id === id);
+
+  if (!post) {
+    return res
+      .status(404)
+      .json({ msg: `A post with the id od ${id} was not found ` });
+  }
+  posts = posts.filter((post)=> post.id !== id)
+  res.status(200).json(posts);
 });
