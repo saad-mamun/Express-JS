@@ -118,3 +118,21 @@ router.delete("/:id", (req, res) => {
   posts = posts.filter((post)=> post.id !== id)
   res.status(200).json(posts);
 });
+
+
+
+day 2 ... role 2
+middleware file a logger.js  
+
+const logger = (req, res, next) => {
+    console.log(
+        `${req.method} ${req.protocol}://${req.get('host')}${req.originalUrl} `
+    );
+    next();
+}
+export default logger
+
+and server.js file a
+import logger from "./middleware/logger.js"
+app.use(logger)
+RESULT:-- url er id show korbe
