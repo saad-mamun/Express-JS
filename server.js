@@ -1,8 +1,11 @@
 import express from "express";
 import router from "./routes/posts.js";
 import logger from "./middleware/logger.js"
+import { fileURLToPath } from 'url'
+import path  from "path";
 
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename)
 
 const app = express();
 const port = process.env.PORT;
@@ -12,7 +15,7 @@ const port = process.env.PORT;
 app.use(logger)
 
 // role-2 setup static folder....
-// app.use(express.static(path.join(__dirname, "public")))
+app.use(express.static(path.join(__dirname, "public")))
 
 
 // Body parser middleware
